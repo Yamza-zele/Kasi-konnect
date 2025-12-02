@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { mockBusinessProfiles, mockFreelancerProfiles, mockFundingRequests, mockJobs, mockJobApplications, mockPayments, mockReviews, mockWithdrawals } from '../../lib/mock-data';
+import { mockBusinessProfiles, mockFreelancerProfiles, mockFundingRequests, mockJobs, mockJobApplications, mockPayments, mockReviews, mockWithdrawals, mockClientProfiles, mockServiceOrders } from '../../lib/mock-data';
 import { generateId, generateTransactionId } from '../utils/currency';
 import {
   BusinessProfile,
@@ -10,7 +10,9 @@ import {
   Payment,
   Review,
   Withdrawal,
-  BusinessDocument
+  BusinessDocument,
+  ClientProfile,
+  ServiceOrder
 } from '../../lib/types';
 
 interface DataContextType {
@@ -26,6 +28,13 @@ interface DataContextType {
   createFreelancerProfile: (profile: FreelancerProfile) => void;
   uploadFreelancerDocument: (userId: string, document: Omit<BusinessDocument, 'id' | 'uploadedAt' | 'verified'>) => void;
   deleteFreelancerDocument: (userId: string, documentId: string) => void;
+  clientProfiles: ClientProfile[];
+  getClientProfile: (userId: string) => ClientProfile | undefined;
+  updateClientProfile: (userId: string, updates: Partial<ClientProfile>) => void;
+  createClientProfile: (profile: ClientProfile) => void;
+  serviceOrders: ServiceOrder[];
+  createServiceOrder: (order: Omit<ServiceOrder, 'id' | 'createdAt'>) => void;
+  updateServiceOrder: (id: string, updates: Partial<ServiceOrder>) => void;
   fundingRequests: FundingRequest[];
   createFundingRequest: (request: Omit<FundingRequest, 'id' | 'createdAt' | 'updatedAt'>) => void;
   updateFundingRequest: (id: string, updates: Partial<FundingRequest>) => void;
@@ -48,6 +57,8 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const [businessProfiles, setBusinessProfiles] = useState<BusinessProfile[]>([]);
   const [freelancerProfiles, setFreelancerProfiles] = useState<FreelancerProfile[]>([]);
+  const [clientProfiles, setClientProfiles] = useState<ClientProfile[]>([]);
+  const [serviceOrders, setServiceOrders] = useState<ServiceOrder[]>([]);
   const [fundingRequests, setFundingRequests] = useState<FundingRequest[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [jobApplications, setJobApplications] = useState<JobApplication[]>([]);
@@ -74,6 +85,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     // Load all data at once to reduce repaints
     const businessProfilesData = loadData('business-profiles', mockBusinessProfiles);
     const freelancerProfilesData = loadData('freelancer-profiles', mockFreelancerProfiles);
+    const clientProfilesData = loadData('client-profiles', mockClientProfiles);
+    const serviceOrdersData = loadData('service-orders', mockServiceOrders);
     const fundingRequestsData = loadData('funding-requests', mockFundingRequests);
     const jobsData = loadData('jobs', mockJobs);
     const jobApplicationsData = loadData('job-applications', mockJobApplications);
@@ -84,6 +97,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     // Set all state at once
     setBusinessProfiles(businessProfilesData);
     setFreelancerProfiles(freelancerProfilesData);
+    setClientProfiles(clientProfilesData);
+    setServiceOrders(serviceOrdersData);
     setFundingRequests(fundingRequestsData);
     setJobs(jobsData);
     setJobApplications(jobApplicationsData);
@@ -95,6 +110,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     if (!localStorage.getItem('kasi-konnect-business-profiles')) {
       localStorage.setItem('kasi-konnect-business-profiles', JSON.stringify(businessProfilesData));
       localStorage.setItem('kasi-konnect-freelancer-profiles', JSON.stringify(freelancerProfilesData));
+      localStorage.setItem('kasi-konnect-client-profiles', JSON.stringify(clientProfilesData));
+      localStorage.setItem('kasi-konnect-service-orders', JSON.stringify(serviceOrdersData));
       localStorage.setItem('kasi-konnect-funding-requests', JSON.stringify(fundingRequestsData));
       localStorage.setItem('kasi-konnect-jobs', JSON.stringify(jobsData));
       localStorage.setItem('kasi-konnect-job-applications', JSON.stringify(jobApplicationsData));
@@ -118,6 +135,20 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     }, 300);
     return () => clearTimeout(timer);
   }, [freelancerProfiles]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      localStorage.setItem('kasi-konnect-client-profiles', JSON.stringify(clientProfiles));
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [clientProfiles]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      localStorage.setItem('kasi-konnect-service-orders', JSON.stringify(serviceOrders));
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [serviceOrders]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -189,6 +220,35 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   const createFreelancerProfile = (profile: FreelancerProfile): void => {
     setFreelancerProfiles((prev) => [...prev, profile]);
+  };
+
+  // Client Profile functions
+  const getClientProfile = (userId: string): ClientProfile | undefined => {
+    return clientProfiles.find((p) => p.userId === userId);
+  };
+
+  const updateClientProfile = (userId: string, updates: Partial<ClientProfile>): void => {
+    setClientProfiles((prev) =>
+      prev.map((p) => (p.userId === userId ? { ...p, ...updates } : p))
+    );
+  };
+
+  const createClientProfile = (profile: ClientProfile): void => {
+    setClientProfiles((prev) => [...prev, profile]);
+  };
+
+  // Service Order functions
+  const createServiceOrder = (order: Omit<ServiceOrder, 'id' | 'createdAt'>): void => {
+    const newOrder: ServiceOrder = {
+      ...order,
+      id: generateId(),
+      createdAt: new Date().toISOString(),
+    };
+    setServiceOrders((prev) => [...prev, newOrder]);
+  };
+
+  const updateServiceOrder = (id: string, updates: Partial<ServiceOrder>): void => {
+    setServiceOrders((prev) => prev.map((o) => (o.id === id ? { ...o, ...updates } : o)));
   };
 
   // Funding Request functions
@@ -336,6 +396,13 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         createFreelancerProfile,
         uploadFreelancerDocument,
         deleteFreelancerDocument,
+        clientProfiles,
+        getClientProfile,
+        updateClientProfile,
+        createClientProfile,
+        serviceOrders,
+        createServiceOrder,
+        updateServiceOrder,
         fundingRequests,
         createFundingRequest,
         updateFundingRequest,

@@ -25,6 +25,8 @@ function AppContent() {
           setCurrentPage('freelancer-dashboard');
         } else if (user.role === 'municipal') {
           setCurrentPage('municipal-dashboard');
+        } else if (user.role === 'client') {
+          setCurrentPage('client-dashboard');
         }
       }
     }

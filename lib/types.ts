@@ -1,4 +1,4 @@
-export type UserRole = 'business' | 'freelancer' | 'municipal';
+export type UserRole = 'business' | 'freelancer' | 'municipal' | 'client';
 
 export interface User {
   id: string;
@@ -118,6 +118,29 @@ export interface Withdrawal {
   status: 'pending' | 'completed' | 'failed';
   transactionId: string;
   createdAt: string;
+}
+
+export interface ClientProfile {
+  userId: string;
+  fullName: string;
+  location: string;
+  phone: string;
+  preferences: string[];
+  budgetRange: string;
+}
+
+export interface ServiceOrder {
+  id: string;
+  clientId: string;
+  freelancerId: string;
+  freelancerName: string;
+  serviceType: string;
+  description: string;
+  budget: number;
+  status: 'pending' | 'in-progress' | 'completed' | 'cancelled';
+  createdAt: string;
+  deadline: string;
+  requirements: string[];
 }
 
 

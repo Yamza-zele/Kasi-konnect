@@ -1,4 +1,4 @@
-import { User, BusinessProfile, FreelancerProfile, FundingRequest, Job, JobApplication, Payment, Review, Withdrawal } from './types';
+import { User, BusinessProfile, FreelancerProfile, FundingRequest, Job, JobApplication, Payment, Review, Withdrawal, ClientProfile, ServiceOrder } from './types';
 
 // Mock Users
 export const mockUsers: User[] = [
@@ -84,6 +84,31 @@ export const mockUsers: User[] = [
     role: 'municipal',
     verified: true,
     createdAt: '2025-01-01T10:00:00Z',
+  },
+  // Clients
+  {
+    id: 'user-11',
+    name: 'Sarah Nkosi',
+    email: 'sarah.nkosi@gmail.com',
+    role: 'client',
+    verified: true,
+    createdAt: '2025-02-15T10:00:00Z',
+  },
+  {
+    id: 'user-12',
+    name: 'Michael Johnson',
+    email: 'michael.j@outlook.com',
+    role: 'client',
+    verified: true,
+    createdAt: '2025-03-20T10:00:00Z',
+  },
+  {
+    id: 'user-13',
+    name: 'Lindiwe Zulu',
+    email: 'lindiwe.zulu@yahoo.com',
+    role: 'client',
+    verified: true,
+    createdAt: '2025-04-10T10:00:00Z',
   },
 ];
 
@@ -227,6 +252,77 @@ export const mockFreelancerProfiles: FreelancerProfile[] = [
     idNumber: '8905055678901',
     qualifications: ['Bachelor of Fine Arts in Photography', 'Professional Photography Certification'],
     certifications: ['Adobe Certified Expert in Lightroom', 'Wedding and Portrait Photographers International Certified'],
+  },
+];
+
+// Mock Client Profiles
+export const mockClientProfiles: ClientProfile[] = [
+  {
+    userId: 'user-11',
+    fullName: 'Sarah Nkosi',
+    location: 'Pretoria Central, Tshwane',
+    phone: '+27 12 789 0123',
+    preferences: ['Design & Development', 'Marketing'],
+    budgetRange: '5000-15000',
+  },
+  {
+    userId: 'user-12',
+    fullName: 'Michael Johnson',
+    location: 'Hatfield, Tshwane',
+    phone: '+27 12 890 1234',
+    preferences: ['Photography & Video', 'Writing & Content'],
+    budgetRange: '2000-8000',
+  },
+  {
+    userId: 'user-13',
+    fullName: 'Lindiwe Zulu',
+    location: 'Centurion, Tshwane',
+    phone: '+27 12 901 2345',
+    preferences: ['Software Development', 'Design & Development'],
+    budgetRange: '10000-25000',
+  },
+];
+
+// Mock Service Orders
+export const mockServiceOrders: ServiceOrder[] = [
+  {
+    id: 'order-1',
+    clientId: 'user-11',
+    freelancerId: 'user-5',
+    freelancerName: 'Lerato Khumalo',
+    serviceType: 'Logo Design',
+    description: 'Need a modern logo for my consulting business',
+    budget: 3500,
+    status: 'in-progress',
+    createdAt: '2025-10-10T10:00:00Z',
+    deadline: '2025-10-25',
+    requirements: ['Vector format', 'Color variations', 'Brand guidelines'],
+  },
+  {
+    id: 'order-2',
+    clientId: 'user-12',
+    freelancerId: 'user-9',
+    freelancerName: 'Bongani Zulu',
+    serviceType: 'Product Photography',
+    description: 'Photography for my handmade jewelry collection',
+    budget: 5000,
+    status: 'completed',
+    createdAt: '2025-09-15T10:00:00Z',
+    deadline: '2025-09-30',
+    requirements: ['50 products', 'High resolution', 'White background'],
+  },
+  {
+    id: 'order-3',
+    clientId: 'user-13',
+    freelancerId: 'user-6',
+    freelancerName: 'Mandla Mthembu',
+    serviceType: 'Website Development',
+    description: 'E-commerce website for my fashion boutique',
+    budget: 20000,
+    status: 'pending',
+    createdAt: '2025-10-12T10:00:00Z',
+    deadline: '2025-11-15',
+    requirements: ['Responsive design', 'Payment integration', 'SEO optimized'],
   },
 ];
 

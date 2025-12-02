@@ -88,6 +88,34 @@ Since this is a frontend-only demo, **any password will work** for these account
 
 ---
 
+## 👥 Client Accounts
+
+### Sarah Nkosi - Consulting Client
+- **Email:** `sarah.nkosi@gmail.com`
+- **Password:** `password` (or any text)
+- **Location:** Pretoria Central, Tshwane
+- **Preferences:** Design & Development, Marketing
+- **Budget Range:** R5,000 - R15,000
+- **Has:** 1 in-progress order, 1 completed order
+
+### Michael Johnson - Business Owner Client
+- **Email:** `michael.j@outlook.com`
+- **Password:** `password` (or any text)
+- **Location:** Hatfield, Tshwane
+- **Preferences:** Photography & Video, Writing & Content
+- **Budget Range:** R2,000 - R8,000
+- **Has:** 1 completed order
+
+### Lindiwe Zulu - Entrepreneur Client
+- **Email:** `lindiwe.zulu@yahoo.com`
+- **Password:** `password` (or any text)
+- **Location:** Centurion, Tshwane
+- **Preferences:** Software Development, Design & Development
+- **Budget Range:** R10,000 - R25,000
+- **Has:** 1 pending order
+
+---
+
 ## 🔐 How to Login
 
 1. Go to the Login page
@@ -123,6 +151,14 @@ Since this is a frontend-only demo, **any password will work** for these account
 - ✅ View platform statistics and activity
 - ✅ Monitor all jobs and applications
 
+### As a Client:
+- ✅ Browse and search for freelancers by skills and category
+- ✅ View freelancer profiles, ratings, and portfolios
+- ✅ Place service orders with custom requirements
+- ✅ Track order progress from pending to completion
+- ✅ Manage payments and view order history
+- ✅ Update profile with preferences and budget ranges
+
 ---
 
 ## 💡 Tips
@@ -131,6 +167,7 @@ Since this is a frontend-only demo, **any password will work** for these account
 - **Business accounts have interactions** - applications received from freelancers
 - **Freelancer accounts have history** - applications submitted, payments received
 - **Municipal account** shows the oversight perspective
+- **Client accounts** demonstrate the service ordering workflow
 - All monetary amounts are displayed in **South African Rands (R)**
 - Transaction IDs are auto-generated for all payments
 
@@ -141,7 +178,8 @@ Since this is a frontend-only demo, **any password will work** for these account
 You can also register a new account:
 1. Click "Sign Up" on the Login page
 2. Fill in your details
-3. Choose your role (Business, Freelancer, or Municipal)
+3. Choose your role (Business, Freelancer, or Client)
 4. Create your profile
 
 **Note:** New accounts start with empty data and won't have the pre-populated dummy data.
+**Municipal accounts cannot be registered** - they are pre-configured for administrative access only.
